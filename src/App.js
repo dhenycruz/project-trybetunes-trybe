@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Content from './Components/Content';
+import Header from './Components/Header';
 
 class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <h1>TrybeTunes</h1>
+        <Header />
         <Content />
       </BrowserRouter>
     );
