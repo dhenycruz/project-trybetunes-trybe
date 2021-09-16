@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import FormLogin from '../Components/FormLogin';
 import { createUser } from '../services/userAPI';
 
 class Login extends React.Component {
@@ -6,7 +8,6 @@ class Login extends React.Component {
     super();
 
     this.requestLogin = this.requestLogin.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.state = {
       user: '',
       disableButton: true,
@@ -21,7 +22,7 @@ class Login extends React.Component {
     }, () => {
       const { user } = this.state;
       const numberCaractere = 3;
-      if (user.length > numberCaractere) {
+      if (user.length >= numberCaractere) {
         this.setState({
           disableButton: false,
         });
@@ -33,44 +34,34 @@ class Login extends React.Component {
     });
   }
 
-  async requestLogin(callbackCreateUser) {
+  async requestLogin(callbackCreateUser, login) {
     const { user } = this.state;
     this.setState({ request: true });
     await callbackCreateUser({ name: user });
     this.setState({ request: false });
+    login();
   }
 
   render() {
     const { user, disableButton, request } = this.state;
+    const { login } = this.props;
     const loadingElement = <span>Carregando...</span>;
+    const FormElement = (<FormLogin
+      user={ user }
+      handleChange={ this.handleChange }
+      onClick={ () => { this.requestLogin(createUser, login); } }
+      disableButton={ disableButton }
+    />);
     return (
       <div data-testid="page-login">
-        <h1>Login</h1>
-        <form>
-          <label htmlFor="user">
-            Usuário:
-            <input
-              data-testid="login-name-input"
-              name="user"
-              type="text"
-              id="user"
-              value={ user }
-              onChange={ this.handleChange }
-            />
-          </label>
-          <button
-            data-testid="login-submit-button"
-            type="button"
-            onClick={ () => { this.requestLogin(createUser); } }
-            disabled={ disableButton }
-          >
-            Entrar
-          </button>
-        </form>
-        { request ? loadingElement : ''}
+        { request ? loadingElement : FormElement}
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
 
 export default Login;

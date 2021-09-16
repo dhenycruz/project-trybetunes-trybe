@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Album from '../pages/Album';
 import Favorites from '../pages/Favorites';
 import Login from '../pages/Login';
@@ -9,12 +9,25 @@ import ProfileEdit from '../pages/ProfileEdit';
 import Search from '../pages/Search';
 
 class Content extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      loggedIn: false,
+    };
+  }
+
+  loginTrue = () => {
+    this.setState({ loggedIn: true });
+  }
+
   render() {
+    const { loggedIn } = this.state;
     return (
       <main>
         <Switch>
           <Route exact path="/">
-            <Login />
+            {loggedIn ? <Redirect to="/search" /> : <Login login={ this.loginTrue } />}
           </Route>
           <Route path="/search">
             <Search />
