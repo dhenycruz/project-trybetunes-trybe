@@ -29,12 +29,8 @@ class Content extends React.Component {
           <Route exact path="/">
             { loggedIn ? <Redirect to="/search" /> : <Login login={ this.loginTrue } />}
           </Route>
-          <Route path="/search">
-            <Search />
-          </Route>
-          <Route path="/album">
-            <Album />
-          </Route>
+          <Route path="/search" component={ Search } />
+          <Route path="/album/:id" render={ (props) => <Album { ...props } /> } />
           <Route path="/favorites">
             <Favorites />
           </Route>

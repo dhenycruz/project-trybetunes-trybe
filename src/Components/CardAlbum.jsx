@@ -11,7 +11,9 @@ class CardAlbum extends React.Component {
           to={ `album/${album.collectionId}` }
           data-testid={ `link-to-album-${album.collectionId}` }
         >
-          <h1>{ album.collectionName }</h1>
+          <img src={ album.artworkUrl100 } alt={ album.collectionName } />
+          <h3>{ album.artistName }</h3>
+          <h5>{ album.collectionName }</h5>
         </Link>
       </div>
     );
@@ -25,7 +27,7 @@ CardAlbum.propTypes = {
     collectionId: PropTypes.number,
     collectionName: PropTypes.string,
     collectionPrice: PropTypes.number,
-    artWorkUrl100: PropTypes.string,
+    artworkUrl100: PropTypes.string,
     releaseDate: PropTypes.string,
     trackCount: PropTypes.number,
   }).isRequired,
