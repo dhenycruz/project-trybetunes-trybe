@@ -27,7 +27,7 @@ class Content extends React.Component {
       <main>
         <Switch>
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/search" /> : <Login login={ this.loginTrue } />}
+            { loggedIn ? <Redirect to="/search" /> : <Login login={ this.loginTrue } />}
           </Route>
           <Route path="/search">
             <Search />
