@@ -12,6 +12,7 @@ class Album extends React.Component {
       songsAlbum: [],
       artistName: '',
       albumName: '',
+      loading: false,
     };
   }
 
@@ -26,21 +27,25 @@ class Album extends React.Component {
       songsAlbum: songs,
       artistName: songs[0].artistName,
       albumName: songs[0].collectionName,
+      loading: true,
     });
   }
 
   render() {
-    const { songsAlbum, artistName, albumName } = this.state;
+    const { songsAlbum, artistName, albumName, loading } = this.state;
     return (
-      <div data-testid="page-album">
-        <h1 data-testid="album-name">{ `Collection Name: ${artistName}` }</h1>
-        <h3 data-testid="artist-name">{ `Artist Name: ${albumName}` }</h3>
-        <ol>
-          { songsAlbum.slice(1).map(
-            (song) => <MusicCard key={ song.trackId } song={ song } />,
-          )}
-        </ol>
-      </div>
+      loading
+      && (
+        <div data-testid="page-album">
+          <h1 data-testid="album-name">{ `Collection Name: ${artistName}` }</h1>
+          <h3 data-testid="artist-name">{ `Artist Name: ${albumName}` }</h3>
+          <ol>
+            { songsAlbum.slice(1).map(
+              (song) => <MusicCard key={ song.trackId } song={ song } />,
+            )}
+          </ol>
+        </div>
+      )
     );
   }
 }
